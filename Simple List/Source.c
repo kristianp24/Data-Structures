@@ -14,7 +14,7 @@ typedef struct {
 	struct Nods* nextNod;
 }Nods;
 
-Nods* addNode(Nods* beggining, laptop l) {
+Nods* addNode(Nods* beginning, laptop l) {
 	//alocate memory for new nod
 	Nods* new1 = (Nods*)malloc(sizeof(Nods));
 
@@ -25,19 +25,19 @@ Nods* addNode(Nods* beggining, laptop l) {
 	new1->information.price = l.price;
 	new1->nextNod = NULL;
 
-	if (beggining == NULL)
-		beggining = new1;
+	if (beginning == NULL)
+		beginning = new1;
 	else {
-		Nods* temp = beggining;
+		Nods* temp = beginning;
 		while (temp->nextNod != NULL)
 			temp = temp->nextNod;
 		temp->nextNod = new1;
 	}
-	return beggining;
+	return beginning;
 }
 
-void displayList(Nods* beggining) {
-	Nods* temp = beggining;
+void displayList(Nods* beginning) {
+	Nods* temp = beginning;
 	while (temp != NULL) {
 		printf("Laptop type=%s ,Year of prod.= %d, Price=%5.2f\n ",
 			temp->information.name, temp->information.yearProduction, temp->information.price);
@@ -45,8 +45,8 @@ void displayList(Nods* beggining) {
 	}
 }
 
-void freeMemory(Nods* beggining) {
-	Nods* temp = beggining;
+void freeMemory(Nods* beginning) {
+	Nods* temp = beginning;
 	while (temp != NULL)
 	{
 		Nods* aux = temp->nextNod; //to save the next element adress before we delete it
@@ -58,8 +58,8 @@ void freeMemory(Nods* beggining) {
 }
 
 //function to display only selected type of laptops (>= year 2015)
-void saveLaptops(Nods* beggining, laptop* vector, int* nrLaptop, int year) {
-	Nods* temp = beggining;
+void saveLaptops(Nods* beginning, laptop* vector, int* nrLaptop, int year) {
+	Nods* temp = beginning;
 	while (temp != NULL) {
 		if (temp->information.yearProduction >= year) {
 			vector[*nrLaptop].name = (char*)malloc((strlen(temp->information.name) + 1) * sizeof(char));
@@ -75,7 +75,7 @@ void saveLaptops(Nods* beggining, laptop* vector, int* nrLaptop, int year) {
 void main() {
 	int nrLaptop;
 	char buffer[20];
-	Nods* beggining = NULL;
+	Nods* beginning = NULL;
 	laptop l;
 
 	FILE* f = fopen("Text.txt", "r");
@@ -86,17 +86,17 @@ void main() {
 		strcpy(l.name, buffer);
 		fscanf(f, "%d", &l.yearProduction);
 		fscanf(f, "%f", &l.price);
-		beggining= addNode(beggining, l);
+		beginning= addNode(beggining, l);
 		free(l.name);
 	}
 	fclose(f);
 
-	displayList(beggining);
+	displayList(beginning);
 	printf("\n------------------\n");
 
 	laptop* vector = (laptop*)malloc(sizeof(laptop)*nrLaptop);
 	int nrElements=0;
-	saveLaptops(beggining, vector, &nrElements, 2015);
+	saveLaptops(beginning, vector, &nrElements, 2015);
 	for (int i = 0; i < nrElements; i++) {
 		printf("Laptop type=%s ,Year of prod.= %d, Price=%5.2f\n ",
 			vector[i].name, vector[i].yearProduction, vector[i].price);
@@ -109,5 +109,5 @@ void main() {
 	
 
 
-	freeMemory(beggining);
+	freeMemory(beginning);
 }
