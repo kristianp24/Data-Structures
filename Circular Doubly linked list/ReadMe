@@ -1,0 +1,2 @@
+Contains source code for the implementation of a circular doubly linked list. Also contains functions from deleting specific nods form list 
+and for finding a specific nod in the list (biggest grade).
