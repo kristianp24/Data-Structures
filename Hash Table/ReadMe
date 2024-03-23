@@ -1,0 +1,2 @@
+This file contains the source code for creating an hash table(vector of lists) in C. It treats cases of collisions 
+using chaining method.
