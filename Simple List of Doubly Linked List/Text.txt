@@ -1,0 +1,5 @@
+4
+Honey 10.5 5
+Milk 4.4 20 
+Chocolate 5.2 25
+Meat 15.9 15
