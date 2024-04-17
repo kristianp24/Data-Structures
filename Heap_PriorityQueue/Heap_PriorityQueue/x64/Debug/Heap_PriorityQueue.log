@@ -1,0 +1,5 @@
+﻿  Source.c
+C:\Users\HP\source\repos\Heap_PriorityQueue\Heap_PriorityQueue\Source.c(96,36): warning C4013: 'strlen' undefined; assuming extern returning int
+C:\Users\HP\source\repos\Heap_PriorityQueue\Heap_PriorityQueue\Source.c(97,3): warning C4013: 'strcpy' undefined; assuming extern returning int
+C:\Users\HP\source\repos\Heap_PriorityQueue\Heap_PriorityQueue\Source.c(88,10): warning C4101: 'p': unreferenced local variable
+  Heap_PriorityQueue.vcxproj -> C:\Users\HP\source\repos\Heap_PriorityQueue\x64\Debug\Heap_PriorityQueue.exe
