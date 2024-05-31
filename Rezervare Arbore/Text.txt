@@ -1,0 +1,9 @@
+8
+25 Sheraton 2 Mihai 500.5
+28 Hillton 2 Ana 250
+33 Miercure 1 Mircea 330.5
+22 GrandInn 2 Gigel 720.6
+31 AthensPalace 3 Malo 1300
+36 BucharestHotel 2 Beni 630.75
+20 MinaPalace 1 Ioana 220
+35 FieriHotel 2 Bena 250

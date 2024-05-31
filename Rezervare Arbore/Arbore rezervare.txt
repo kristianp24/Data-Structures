@@ -1,0 +1,210 @@
+#include<malloc.h>
+#include<stdio.h>
+
+typedef struct {
+	unsigned int id;
+	char* denHotel;
+	unsigned char nrCamereRez;
+	char* numeClient;
+	float sumaPlata;
+}rezervare;
+
+typedef struct {
+	rezervare info;
+	struct nodArb* right, * left;
+}nodArb;
+
+nodArb* createNod(rezervare rez,nodArb* rght,nodArb*lft) {
+	nodArb* nou = (nodArb*)malloc(sizeof(nodArb));
+	
+	nou->info.denHotel = (char*)malloc(strlen(rez.denHotel) + 1);
+	strcpy(nou->info.denHotel, rez.denHotel);
+	nou->info.numeClient = (char*)malloc(strlen(rez.numeClient) + 1);
+	strcpy(nou->info.numeClient, rez.numeClient);
+	nou->info.id = rez.id;
+	nou->info.nrCamereRez = rez.nrCamereRez;
+	nou->info.sumaPlata = rez.sumaPlata;
+	nou->left = lft;
+	nou->right = rght;
+
+	return nou;
+
+}
+
+nodArb* insertNod(nodArb* rad, rezervare r) {
+	if (rad != NULL) {
+		if (rad->info.id > r.id) {
+			rad->left = insertNod(rad->left, r);
+			return rad;
+		}
+		else
+		{
+          if (rad->info.id < r.id) {
+			rad->right = insertNod(rad->right, r);
+			return rad;
+		  }
+		   else return rad;
+		}
+			
+
+	}
+	else
+		return createNod(r, NULL, NULL);
+}
+
+void preorder(nodArb* rad) {
+	if (rad != NULL) {
+		printf("\n Id:%d, Den Hotel:%s, Suma plata:%5.2f, Numar camere rez:%d",
+			rad->info.id, rad->info.denHotel, rad->info.sumaPlata, rad->info.nrCamereRez);
+		preorder(rad->left);
+		preorder(rad->right);
+	}
+}
+
+void freeMemory(nodArb* rad) {
+	if (rad != NULL) {
+		free(rad->info.denHotel);
+		free(rad->info.numeClient);
+		free(rad->left);
+		free(rad->right);
+		free(rad);
+	}
+}
+
+void numarTotalCamereNodF(nodArb* rad, int* suma) {
+	if (rad != NULL)
+	{
+		if (rad->left == NULL && rad->right == NULL) {
+			int i = rad->info.nrCamereRez;
+			(*suma) += i;
+
+		}
+		numarTotalCamereNodF(rad->left, suma);
+		numarTotalCamereNodF(rad->right, suma);
+	}
+}
+
+int height(nodArb* rad) {
+	if (rad == NULL) return -1;
+
+	int left = height(rad->left);
+	int right = height(rad->right);
+	if (left < right) return 1+ right;
+	else return 1+left ;
+}
+
+nodArb* stergereRad(nodArb* rad) {
+	if (rad == NULL) {
+		return NULL;
+	}
+	else 
+	{
+		nodArb* aux = rad;
+		if (rad->left != NULL)
+		{
+			rad = aux->left;
+			if (aux->right != NULL)
+			{
+				nodArb* temp = aux->left;
+				while (temp->right != NULL) {
+					temp = temp->right;
+				}
+				temp->right = aux->right;
+			}
+		
+        }
+		else {
+			if (aux->right != NULL)
+				rad = aux->right;
+			
+		}
+
+		free(aux->info.denHotel);
+		free(aux->info.numeClient);
+		free(aux);
+		return rad;
+
+	}
+}
+
+void salvareNoduri(nodArb* rad, int id,int* vect,int* contor) {
+	if (rad != NULL) {
+		if (rad->info.id < id) {
+			vect[(*contor)] = rad->info.id;
+			(*contor)++;
+           salvareNoduri(rad->right, id,vect,contor);
+		}
+			
+		else if (rad->info.id > id)
+		{
+			vect[(*contor)] = rad->info.id;
+			(*contor)++;
+			salvareNoduri(rad->left, id,vect,contor);
+		}
+	}
+}
+
+
+void inorder(nodArb* rad) {
+	if (rad != NULL) {
+		inorder(rad->left);
+		printf("\n Id:%d, Den Hotel:%s, Suma plata:%5.2f, Numar camere rez:%d",
+			rad->info.id, rad->info.denHotel, rad->info.sumaPlata, rad->info.nrCamereRez);
+		inorder(rad->right);
+	}
+}
+
+
+
+void main() {
+	char buffer[30];
+	int nrNods;
+	nodArb* rad = NULL;
+	rezervare r;
+	FILE* f = fopen("Text.txt", "r");
+	fscanf(f, "%d", &nrNods);
+	for (int i = 0; i < nrNods; i++) {
+		fscanf(f, "%d", &r.id);
+		fscanf(f, "%s", buffer);
+		r.denHotel = (char*)malloc(strlen(buffer) + 1);
+		strcpy(r.denHotel, buffer);
+		fscanf(f, "%u", &r.nrCamereRez);
+		//fscanf(f, "%c", &r.nrCamereRez);
+
+		fscanf(f, "%s", buffer);
+		r.numeClient = (char*)malloc(strlen(buffer) + 1);
+		strcpy(r.numeClient, buffer);
+		fscanf(f, "%f", &r.sumaPlata);
+
+		rad = insertNod(rad, r);
+		free(r.denHotel);
+		free(r.numeClient);
+	}
+	fclose(f);
+	printf("\n---------------------");
+	preorder(rad);
+	printf("\n---------------------");
+	int sum = 0;
+	numarTotalCamereNodF(rad, &sum);
+	printf("\nNumar total camere rezervate din nodurile frunza = %d", sum);
+	printf("\n---------------------");
+	int nivele = 0;
+	nivele  = height(rad);
+	printf("\n Numarul de nivele este: %d", nivele);
+	/*printf("\n-------Stergere radacina-------------");
+	rad = stergereRad(rad);
+	inorder(rad);*/
+	printf("\n---------------------\n");
+	int* vector = (int*)malloc(sizeof(int) * nrNods);
+	int contor = 0;
+	salvareNoduri(rad, 35, vector, &contor);
+	for (int i = 0; i < contor; i++)
+		printf("%d ", vector[i]);
+
+	free(vector);
+
+
+	freeMemory(rad);
+
+	
+}
