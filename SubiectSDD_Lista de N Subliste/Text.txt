@@ -1,0 +1,9 @@
+8
+Ochii 20/12/2023 Gigel Dureri 250
+Cap 5/4/2021 Dorel Migrena 300
+Ochii 3/2/2021 Mira Dureri 120
+Cancer 6/10/2023 Alma Inceput 500
+Cap 15/3/2024 Beni Dureri 220
+Cancer 25/06/2023 Mihnea Inceput 600
+Piele 3/2/2024 Mircea Dureri 330.5
+Urechi 9/4/2023 Ioana Dureri 250.6
