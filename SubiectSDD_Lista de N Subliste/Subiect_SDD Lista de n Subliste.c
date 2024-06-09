@@ -140,59 +140,60 @@ void modificarePret(nodLP* beg, const char* data, float pretNou) {
 	}
 }
 
-void deleteNod(nodLP* begLP, const char* diag) {
-	nodLP* tempLP = begLP;
-	while (tempLP != NULL) {
-		nodLS* aux = tempLP->info;
-		//nodLS* aux = tempLS;
+//Gresit, nu modul care se cere.
+// void deleteNod(nodLP* begLP, const char* diag) {
+// 	nodLP* tempLP = begLP;
+// 	while (tempLP != NULL) {
+// 		nodLS* aux = tempLP->info;
+// 		//nodLS* aux = tempLS;
 		
 		
-			while (aux != NULL)
-			{
-				if (strcmp(aux->info.diagnostic, diag) == 0) {
-					nodLS* temp = aux->next;
-					//aux = aux->next;
-					free(aux->info.data);
-					free(aux->info.numeMedic);
-					free(aux->info.specialitate);
-					free(aux);
-					tempLP->info = temp;
-					aux = temp;
-				}
+// 			while (aux != NULL)
+// 			{
+// 				if (strcmp(aux->info.diagnostic, diag) == 0) {
+// 					nodLS* temp = aux->next;
+// 					//aux = aux->next;
+// 					free(aux->info.data);
+// 					free(aux->info.numeMedic);
+// 					free(aux->info.specialitate);
+// 					free(aux);
+// 					tempLP->info = temp;
+// 					aux = temp;
+// 				}
 
-				else
-				{
-					nodLS* ajutor = aux->next;
-					if (ajutor != NULL) {
+// 				else
+// 				{
+// 					nodLS* ajutor = aux->next;
+// 					if (ajutor != NULL) {
 
 
-						if (strcmp(ajutor->info.diagnostic, diag) == 0) {
-							nodLS* newnext = ajutor->next;
-							free(ajutor->info.data);
-							free(ajutor->info.numeMedic);
-							free(ajutor->info.specialitate);
-							free(ajutor);
-							aux->next = newnext;
-							aux = aux->next;
+// 						if (strcmp(ajutor->info.diagnostic, diag) == 0) {
+// 							nodLS* newnext = ajutor->next;
+// 							free(ajutor->info.data);
+// 							free(ajutor->info.numeMedic);
+// 							free(ajutor->info.specialitate);
+// 							free(ajutor);
+// 							aux->next = newnext;
+// 							aux = aux->next;
 
-						}
-						else
-							aux = aux->next;
-					}
-					else {
-						aux = aux->next;
-					}
+// 						}
+// 						else
+// 							aux = aux->next;
+// 					}
+// 					else {
+// 						aux = aux->next;
+// 					}
 
-      			}
-				//aux = aux->next;
+//       			}
+// 				//aux = aux->next;
 
-			}
+// 			}
 		
 		
 		
-		tempLP = tempLP->next;
-	}
-}
+// 		tempLP = tempLP->next;
+// 	}
+// }
 
 void salvareConsultatiVector(nodLP* begLP, consultatie* vector, int* contor, float pret) {
 	nodLP* temp = begLP;
